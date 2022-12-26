@@ -10,16 +10,22 @@ type User struct {
 	No_telp         string
 	Profile_picture string
 	Notification    bool
+	Resep           []Resep `gorm:"many2many:Saved_Recipes;"`
 }
 
 type Resep struct {
 	gorm.Model
-	Rating      bool
-	Descriptoin string
-	Judul       string
-	Portionsize int
-	Foto        string
-	Video       string
+	Description  string
+	Judul        string
+	Portionsize  int
+	Foto         string
+	Video        string
+	Created_by   int
+	User         User `gorm:"foreignKey:Created_by"`
+	Rating       float32
+	Jumlahrating int
+	Users        []User      `gorm:"many2many:Saved_Recipes;"`
+	Listbahan    []Listbahan `gorm:"foreignKey:Resep_id"`
 }
 
 type Bahan struct {
@@ -27,19 +33,12 @@ type Bahan struct {
 	Namabahan string
 }
 
-type Requiredingredients struct {
+type Listbahan struct {
 	gorm.Model
 	Bahan_id    int
 	Bahan       Bahan `gorm:"foreignKey:Bahan_id"`
 	Jumlahbahan int
-}
-
-type Listbahan struct {
-	gorm.Model
-	Req_id              int
-	Requiredingredients Requiredingredients `gorm:"foreignKey:Req_id"`
-	Resep_id            int
-	Resep               Resep `gorm:"foreignKey:Resep_id"`
+	Resep_id    uint
 }
 
 type Savedrecipe struct {

@@ -15,6 +15,4 @@ func main() {
 	initializers.DB.AutoMigrate(&models.Resep{})
 	initializers.DB.AutoMigrate(&models.Bahan{})
 	initializers.DB.AutoMigrate(&models.Listbahan{})
-	initializers.DB.AutoMigrate(&models.Requiredingredients{})
-	initializers.DB.AutoMigrate(&models.Savedrecipe{})
 }

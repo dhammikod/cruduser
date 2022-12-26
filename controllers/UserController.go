@@ -48,9 +48,7 @@ func UserCreate(c *gin.Context) {
 		return
 	}
 	//return user
-	c.JSON(200, gin.H{
-		"user": user,
-	})
+	c.Status(200)
 }
 
 func UsersIndex(c *gin.Context) {
@@ -115,9 +113,7 @@ func UsersUpdate(c *gin.Context) {
 	})
 
 	//return updated value
-	c.JSON(200, gin.H{
-		"user": user,
-	})
+	c.Status(200)
 }
 
 func UsersDelete(c *gin.Context) {
@@ -182,16 +178,11 @@ func Login(c *gin.Context) {
 		return
 	}
 	//send it back
+	c.Status(200)
 	c.SetSameSite(http.SameSiteLaxMode)
 	c.SetCookie("authorization", tokenString, 3600*24*30, "", "", false, true)
-
-	c.JSON(http.StatusOK, gin.H{})
 }
 
 func Validate(c *gin.Context) {
-	user, _ := c.Get("user")
-
-	c.JSON(http.StatusOK, gin.H{
-		"message": user,
-	})
+	c.Status(200)
 }
