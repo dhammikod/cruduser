@@ -18,8 +18,9 @@ type Resep struct {
 	Description  string
 	Judul        string
 	Portionsize  int
-	Foto         string
-	Video        string
+	Foto         []byte `gorm:"type:longblob;default:null"`
+	Video        []byte `gorm:"type:longblob;default:null"`
+	Steps        string `gorm:"type:text"`
 	Created_by   int
 	User         User `gorm:"foreignKey:Created_by"`
 	Rating       float32

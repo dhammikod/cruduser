@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/base64"
 	"net/http"
 
 	"github.com/dhammikod/cruduser/initializers"
@@ -17,8 +18,6 @@ func ResepCreate(c *gin.Context) {
 		Description  string
 		Judul        string
 		Portionsize  int
-		Foto         string
-		Video        string
 	}
 	if c.Bind(&body) != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -29,8 +28,7 @@ func ResepCreate(c *gin.Context) {
 	}
 
 	//create a user
-
-	resep := models.Resep{Created_by: body.Created_by, Judul: body.Judul, Foto: body.Foto, Video: body.Video, Portionsize: body.Portionsize, Description: body.Description, Rating: body.Rating}
+	resep := models.Resep{Created_by: body.Created_by, Judul: body.Judul, Foto: nil, Video: nil, Portionsize: body.Portionsize, Description: body.Description, Rating: body.Rating}
 	result := initializers.DB.Create(&resep)
 
 	if result.Error != nil {
@@ -80,6 +78,19 @@ func ResepUpdate(c *gin.Context) {
 	}
 	c.Bind(&body)
 
+	//decode the foto
+	imageData, err := base64.StdEncoding.DecodeString(body.Foto)
+	if err != nil {
+		c.AbortWithStatus(500)
+		return
+	}
+
+	//decode the video
+	videoData, err := base64.StdEncoding.DecodeString(body.Video)
+	if err != nil {
+		c.AbortWithStatus(500)
+		return
+	}
 	//find the post to update
 	var resep models.Resep
 	initializers.DB.First(&resep, id)
@@ -90,8 +101,8 @@ func ResepUpdate(c *gin.Context) {
 		Description: body.Description,
 		Judul:       body.Judul,
 		Portionsize: body.Portionsize,
-		Foto:        body.Foto,
-		Video:       body.Video,
+		Foto:        imageData,
+		Video:       videoData,
 	})
 
 	//return updated value

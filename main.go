@@ -15,46 +15,62 @@ func init() {
 func main() {
 	r := gin.Default()
 
-	//register
-	r.POST("/users", controllers.UserCreate)
+	users := r.Group("/users")
+	{
+		//register
+		users.POST("/", controllers.UserCreate)
+
+		//crud user
+		users.GET("/", middleware.RequireAuth, controllers.UsersIndex)
+		users.GET("/:id", middleware.RequireAuth, controllers.UsersShow)
+		users.PUT("/:id", middleware.RequireAuth, controllers.UsersUpdate)
+		users.DELETE("/:id", middleware.RequireAuth, controllers.UsersDelete)
+	}
 
 	//login
 	r.POST("/login", controllers.Login)
 
-	//validation
+	//tes validation
 	r.GET("/validate", middleware.RequireAuth, controllers.Validate)
 
-	//crud user
-	r.GET("/users", controllers.UsersIndex)
-	r.GET("/users/:id", controllers.UsersShow)
-	r.PUT("/users/:id", controllers.UsersUpdate)
-	r.DELETE("/users/:id", controllers.UsersDelete)
-
 	//crud resep
-	r.POST("/resep", controllers.ResepCreate)
-	r.GET("/resep", controllers.ResepIndex)
-	r.GET("/resep/:id", controllers.ResepShow)
-	r.PUT("/resep/:id", controllers.ResepUpdate)
-	r.DELETE("/resep/:id", controllers.ResepDelete)
+	reseps := r.Group("/resep").Use(middleware.RequireAuth)
+	{
+		reseps.POST("/", controllers.ResepCreate)
+		reseps.GET("/", controllers.ResepIndex)
+		reseps.GET("/:id", controllers.ResepShow)
+		reseps.PUT("/:id", controllers.ResepUpdate)
+		reseps.DELETE("/:id", controllers.ResepDelete)
+	}
 
-	//crud bahan
-	r.POST("/bahan", controllers.BahanCreate)
-	r.GET("/bahan", controllers.BahanIndex)
-	r.GET("/bahan/:id", controllers.BahanShow)
-	r.PUT("/bahan/:id", controllers.BahanUpdate)
-	r.DELETE("/bahan/:id", controllers.BahanDelete)
+	bahans := r.Group("/bahan").Use(middleware.RequireAuth)
+	{
+		//crud bahan
+		bahans.POST("/", controllers.BahanCreate)
+		bahans.GET("/", controllers.BahanIndex)
+		bahans.GET("/:id", controllers.BahanShow)
+		bahans.PUT("/:id", controllers.BahanUpdate)
+		bahans.DELETE("/:id", controllers.BahanDelete)
+	}
 
-	//crud listbahan
-	r.POST("/listbahan", controllers.ListBahanCreate)
-	r.GET("/listbahan", controllers.ListBahanIndex)
-	r.GET("/listbahan/:id", controllers.ListBahanShow)
-	r.PUT("/listbahan/:id", controllers.ListBahanUpdate)
-	r.DELETE("/listbahan/:id", controllers.ListBahanDelete)
+	listbahan := r.Group("/listbahan").Use(middleware.RequireAuth)
+	{
+		//crud listbahan
+		listbahan.POST("/", controllers.ListBahanCreate)
+		listbahan.GET("/", controllers.ListBahanIndex)
+		listbahan.GET("/:id", controllers.ListBahanShow)
+		listbahan.PUT("/:id", controllers.ListBahanUpdate)
+		listbahan.DELETE("/:id", controllers.ListBahanDelete)
+	}
 
-	//crud saved recipe
-	r.POST("/savedrecipe", controllers.SavedRecipeCreate)
-	r.GET("/savedrecipe", controllers.SavedRecipeIndex)
-	r.GET("/savedrecipe/:id", controllers.SavedRecipeShow)
-	r.POST("/deletesavedresep", controllers.SavedRecipeDelete)
+	savedrecipes := r.Group("/savedrecipe").Use(middleware.RequireAuth)
+	{
+		//crud saved recipe
+		savedrecipes.POST("/", controllers.SavedRecipeCreate)
+		savedrecipes.GET("/", controllers.SavedRecipeIndex)
+		savedrecipes.GET("/:id", controllers.SavedRecipeShow)
+		savedrecipes.POST("/deletesavedresep", controllers.SavedRecipeDelete)
+	}
+
 	r.Run()
 }
