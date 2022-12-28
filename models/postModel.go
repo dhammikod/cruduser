@@ -16,6 +16,8 @@ type User struct {
 type Resep struct {
 	gorm.Model
 	Description  string
+	Timetaken    string
+	Totalcal     int
 	Judul        string
 	Portionsize  int
 	Foto         []byte `gorm:"type:longblob;default:null"`

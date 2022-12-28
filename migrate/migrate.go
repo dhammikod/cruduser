@@ -32,11 +32,11 @@ func main() {
 	initializers.DB.Create(&models.User{Name: "magnus", Email: "magnus@gmail.com", Password: string(hash), No_telp: "856362211", Profile_picture: "profle picture", Notification: false})
 
 	//creating reseps
-	initializers.DB.Create(&models.Resep{Created_by: 1, Judul: "nasi goreng", Steps: "Cicak", Portionsize: 3, Description: "nasi goreng khusus mahasiswa on budget", Rating: 3, Jumlahrating: 0})
-	initializers.DB.Create(&models.Resep{Created_by: 2, Judul: "bebek bakar", Steps: "Cicak", Portionsize: 1, Description: "aves mewah", Rating: 5, Jumlahrating: 0})
-	initializers.DB.Create(&models.Resep{Created_by: 1, Judul: "mie goreng", Steps: "Cicak", Portionsize: 1, Description: "mie goreng khusus mahasiswa on budget", Rating: 1, Jumlahrating: 0})
-	initializers.DB.Create(&models.Resep{Created_by: 3, Judul: "indomie mewah", Steps: "Cicak", Portionsize: 1, Description: "mie goreng indomie bernutrisi", Rating: 5, Jumlahrating: 0})
-	initializers.DB.Create(&models.Resep{Created_by: 4, Judul: "fu yung hai", Steps: "Cicak", Portionsize: 2, Description: "chineese food yang mudah dimasak", Rating: 4, Jumlahrating: 0})
+	initializers.DB.Create(&models.Resep{Created_by: 1, Judul: "nasi goreng", Steps: "Cicak", Portionsize: 3, Description: "nasi goreng khusus mahasiswa on budget", Timetaken: "30 menit", Totalcal: 1000, Rating: 3, Jumlahrating: 0})
+	initializers.DB.Create(&models.Resep{Created_by: 2, Judul: "bebek bakar", Steps: "Cicak", Portionsize: 1, Description: "aves mewah", Timetaken: "3 jam", Rating: 5, Jumlahrating: 0, Totalcal: 1000})
+	initializers.DB.Create(&models.Resep{Created_by: 1, Judul: "mie goreng", Steps: "Cicak", Portionsize: 1, Description: "mie goreng khusus mahasiswa on budget", Timetaken: "30 menit", Totalcal: 500, Rating: 1, Jumlahrating: 0})
+	initializers.DB.Create(&models.Resep{Created_by: 3, Judul: "indomie mewah", Steps: "Cicak", Portionsize: 1, Description: "mie goreng indomie bernutrisi", Timetaken: "15 menit", Totalcal: 1000, Rating: 5, Jumlahrating: 0})
+	initializers.DB.Create(&models.Resep{Created_by: 4, Judul: "fu yung hai", Steps: "Cicak", Portionsize: 2, Description: "chineese food yang mudah dimasak", Timetaken: "15 menit", Totalcal: 700, Rating: 4, Jumlahrating: 0})
 
 	//create bahan
 	initializers.DB.Create(&models.Bahan{Namabahan: "kentang"})
