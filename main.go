@@ -39,6 +39,8 @@ func main() {
 		reseps.POST("/", controllers.ResepCreate)
 		reseps.GET("/", controllers.ResepIndex)
 		reseps.GET("/:id", controllers.ResepShow)
+		reseps.GET("/user/:id", controllers.Resepbyuser)
+		reseps.POST("/bahan/", controllers.Resepbybahan)
 		reseps.PUT("/:id", controllers.ResepUpdate)
 		reseps.DELETE("/:id", controllers.ResepDelete)
 	}
