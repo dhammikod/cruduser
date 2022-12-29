@@ -18,13 +18,13 @@ func UserCreate(c *gin.Context) {
 		Name            string
 		Email           string
 		Password        string
-		No_telp         string
 		Profile_picture string
 		Notification    bool
 	}
 	if c.Bind(&body) != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Failed to read body",
+			"status": "400",
+			"error":  "Failed to read body",
 		})
 
 		return
@@ -34,12 +34,13 @@ func UserCreate(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Failed to hash password",
+			"status": "400",
+			"error":  "Failed to hash password",
 		})
 	}
 	//create a user
 
-	user := models.User{Name: body.Name, Email: body.Email, Password: string(hash), No_telp: body.No_telp, Profile_picture: body.Profile_picture, Notification: body.Notification}
+	user := models.User{Name: body.Name, Email: body.Email, Password: string(hash), Profile_picture: body.Profile_picture, Notification: body.Notification}
 
 	result := initializers.DB.Create(&user)
 
@@ -48,7 +49,9 @@ func UserCreate(c *gin.Context) {
 		return
 	}
 	//return user
-	c.Status(200)
+	c.JSON(200, gin.H{
+		"status": "200",
+	})
 }
 
 func UsersIndex(c *gin.Context) {
@@ -58,7 +61,8 @@ func UsersIndex(c *gin.Context) {
 
 	//respond to the posts
 	c.JSON(200, gin.H{
-		"user": users,
+		"status": "200",
+		"user":   users,
 	})
 }
 
@@ -71,10 +75,10 @@ func UsersShow(c *gin.Context) {
 
 	//respond to the posts
 	c.JSON(200, gin.H{
-		"user": user,
+		"status": "200",
+		"user":   user,
 	})
 }
-
 func UsersUpdate(c *gin.Context) {
 	//get id
 	id := c.Param("id")
@@ -84,7 +88,6 @@ func UsersUpdate(c *gin.Context) {
 		Name            string
 		Email           string
 		Password        string
-		No_telp         string
 		Profile_picture string
 		Notification    bool
 	}
@@ -98,7 +101,8 @@ func UsersUpdate(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Failed to hash password",
+			"status": "400",
+			"error":  "Failed to hash password",
 		})
 	}
 
@@ -107,13 +111,14 @@ func UsersUpdate(c *gin.Context) {
 		Name:            body.Name,
 		Email:           body.Email,
 		Password:        string(hash),
-		No_telp:         body.No_telp,
 		Profile_picture: body.Profile_picture,
 		Notification:    body.Notification,
 	})
 
 	//return updated value
-	c.Status(200)
+	c.JSON(200, gin.H{
+		"status": "200",
+	})
 }
 
 func UsersDelete(c *gin.Context) {
@@ -123,7 +128,9 @@ func UsersDelete(c *gin.Context) {
 	//delete
 	initializers.DB.Delete(&models.User{}, id)
 	//return value
-	c.Status(200)
+	c.JSON(200, gin.H{
+		"status": "200",
+	})
 }
 
 func Login(c *gin.Context) {
@@ -134,7 +141,8 @@ func Login(c *gin.Context) {
 	}
 	if c.Bind(&body) != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Failed to read body",
+			"status": "400",
+			"error":  "Failed to read body",
 		})
 
 		return
@@ -146,7 +154,8 @@ func Login(c *gin.Context) {
 
 	if user.ID == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Invalid Email or Password",
+			"status": "400",
+			"error":  "Invalid Email or Password",
 		})
 
 		return
@@ -156,7 +165,8 @@ func Login(c *gin.Context) {
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Invalid Email or Password",
+			"status": "400",
+			"error":  "Invalid Email or Password",
 		})
 
 		return
@@ -172,7 +182,9 @@ func Login(c *gin.Context) {
 	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Failed to create Token",
+			"user":   user.ID,
+			"status": "400",
+			"error":  "Failed to create Token",
 		})
 
 		return
@@ -180,15 +192,17 @@ func Login(c *gin.Context) {
 	//send it back
 	c.SetSameSite(http.SameSiteLaxMode)
 	c.SetCookie("authorization", tokenString, 3600*24*30, "", "", false, true)
-	// c.JSON(http.StatusOK, gin.H{
-	// 	"token": tokenString,
-	// })
+	c.JSON(http.StatusOK, gin.H{
+		"status": "200",
+		"token":  tokenString,
+	})
 }
 
 func Validate(c *gin.Context) {
 	user, _ := c.Get("user")
 
 	c.JSON(http.StatusOK, gin.H{
+		"status":  "200",
 		"message": &user,
 	})
 }

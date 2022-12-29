@@ -25,11 +25,11 @@ func main() {
 	if err != nil {
 		fmt.Println("ada error")
 	}
-	initializers.DB.Create(&models.User{Name: "Dhammiko", Email: "Dhammiko@gmail.com", Password: string(hash), No_telp: "082233123", Profile_picture: "profle picture", Notification: false})
-	initializers.DB.Create(&models.User{Name: "hagen", Email: "hagen@gmail.com", Password: string(hash), No_telp: "324523212", Profile_picture: "profle picture", Notification: false})
-	initializers.DB.Create(&models.User{Name: "siapa", Email: "siapa1@gmail.com", Password: string(hash), No_telp: "812361273", Profile_picture: "profle picture", Notification: false})
-	initializers.DB.Create(&models.User{Name: "ludwig", Email: "ludwig@gmail.com", Password: string(hash), No_telp: "657322311", Profile_picture: "profle picture", Notification: false})
-	initializers.DB.Create(&models.User{Name: "magnus", Email: "magnus@gmail.com", Password: string(hash), No_telp: "856362211", Profile_picture: "profle picture", Notification: false})
+	initializers.DB.Create(&models.User{Name: "Dhammiko", Email: "Dhammiko@gmail.com", Password: string(hash), Profile_picture: "profle picture", Notification: false})
+	initializers.DB.Create(&models.User{Name: "hagen", Email: "hagen@gmail.com", Password: string(hash), Profile_picture: "profle picture", Notification: false})
+	initializers.DB.Create(&models.User{Name: "siapa", Email: "siapa1@gmail.com", Password: string(hash), Profile_picture: "profle picture", Notification: false})
+	initializers.DB.Create(&models.User{Name: "ludwig", Email: "ludwig@gmail.com", Password: string(hash), Profile_picture: "profle picture", Notification: false})
+	initializers.DB.Create(&models.User{Name: "magnus", Email: "magnus@gmail.com", Password: string(hash), Profile_picture: "profle picture", Notification: false})
 
 	//creating reseps
 	initializers.DB.Create(&models.Resep{Created_by: 1, Judul: "nasi goreng", Steps: "Cicak", Portionsize: 3, Description: "nasi goreng khusus mahasiswa on budget", Timetaken: "30 menit", Totalcal: 1000, Rating: 3, Jumlahrating: 0})

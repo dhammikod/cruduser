@@ -21,7 +21,8 @@ func ResepCreate(c *gin.Context) {
 	}
 	if c.Bind(&body) != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Failed to read body",
+			"status": "400",
+			"error":  "Failed to read body",
 		})
 
 		return
@@ -32,11 +33,15 @@ func ResepCreate(c *gin.Context) {
 	result := initializers.DB.Create(&resep)
 
 	if result.Error != nil {
-		c.Status(400)
+		c.JSON(400, gin.H{
+			"status": "400",
+		})
 		return
 	}
 	//return user
-	c.Status(200)
+	c.JSON(200, gin.H{
+		"status": "200",
+	})
 }
 
 func ResepIndex(c *gin.Context) {
@@ -46,7 +51,8 @@ func ResepIndex(c *gin.Context) {
 
 	//respond to the posts
 	c.JSON(200, gin.H{
-		"Resep": reseps,
+		"status": "200",
+		"Resep":  reseps,
 	})
 }
 
@@ -59,7 +65,8 @@ func ResepShow(c *gin.Context) {
 
 	//respond to the posts
 	c.JSON(200, gin.H{
-		"resep": resep,
+		"status": "200",
+		"resep":  resep,
 	})
 }
 
@@ -81,14 +88,18 @@ func ResepUpdate(c *gin.Context) {
 	//decode the foto
 	imageData, err := base64.StdEncoding.DecodeString(body.Foto)
 	if err != nil {
-		c.AbortWithStatus(500)
+		c.AbortWithStatusJSON(500, gin.H{
+			"status": "500",
+		})
 		return
 	}
 
 	//decode the video
 	videoData, err := base64.StdEncoding.DecodeString(body.Video)
 	if err != nil {
-		c.AbortWithStatus(500)
+		c.AbortWithStatusJSON(500, gin.H{
+			"status": "500",
+		})
 		return
 	}
 	//find the post to update
@@ -106,7 +117,9 @@ func ResepUpdate(c *gin.Context) {
 	})
 
 	//return updated value
-	c.Status(200)
+	c.JSON(http.StatusOK, gin.H{
+		"status": "200",
+	})
 }
 
 func ResepDelete(c *gin.Context) {
@@ -116,5 +129,8 @@ func ResepDelete(c *gin.Context) {
 	//delete
 	initializers.DB.Delete(&models.Resep{}, id)
 	//return value
-	c.Status(200)
+	c.JSON(http.StatusOK, gin.H{
+		"status": "200",
+	})
+	return
 }

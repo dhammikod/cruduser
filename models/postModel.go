@@ -7,7 +7,6 @@ type User struct {
 	Name            string
 	Email           string
 	Password        string
-	No_telp         string
 	Profile_picture string
 	Notification    bool
 	Resep           []Resep `gorm:"many2many:Saved_Recipes;"`
@@ -34,6 +33,7 @@ type Resep struct {
 type Bahan struct {
 	gorm.Model
 	Namabahan string
+	Foto      []byte `gorm:"type:longblob;default:null"`
 }
 
 type Listbahan struct {

@@ -17,7 +17,8 @@ func ListBahanCreate(c *gin.Context) {
 	}
 	if c.Bind(&body) != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Failed to read body",
+			"status": "400",
+			"error":  "Failed to read body",
 		})
 
 		return
@@ -29,12 +30,17 @@ func ListBahanCreate(c *gin.Context) {
 	result := initializers.DB.Create(&listbahan)
 
 	if result.Error != nil {
-		c.Status(400)
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status": "400",
+			"error":  "something went wrong",
+		})
 		return
 	}
 
 	//return user
-	c.Status(200)
+	c.JSON(http.StatusOK, gin.H{
+		"status": "200",
+	})
 }
 
 func ListBahanIndex(c *gin.Context) {
@@ -44,6 +50,7 @@ func ListBahanIndex(c *gin.Context) {
 
 	//respond to the posts
 	c.JSON(200, gin.H{
+		"status":    "200",
 		"listbahan": bahans,
 	})
 }
@@ -57,6 +64,7 @@ func ListBahanShow(c *gin.Context) {
 
 	//respond to the posts
 	c.JSON(200, gin.H{
+		"status":    "200",
 		"listbahan": bahan,
 	})
 }
@@ -83,7 +91,9 @@ func ListBahanUpdate(c *gin.Context) {
 	})
 
 	//return updated value
-	c.Status(200)
+	c.JSON(200, gin.H{
+		"status": "200",
+	})
 }
 
 func ListBahanDelete(c *gin.Context) {
@@ -93,5 +103,7 @@ func ListBahanDelete(c *gin.Context) {
 	//delete
 	initializers.DB.Delete(&models.Listbahan{}, id)
 	//return value
-	c.Status(200)
+	c.JSON(200, gin.H{
+		"status": "200",
+	})
 }

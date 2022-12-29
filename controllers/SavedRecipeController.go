@@ -16,7 +16,8 @@ func SavedRecipeCreate(c *gin.Context) {
 	}
 	if c.Bind(&body) != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Failed to read body",
+			"status": "400",
+			"error":  "Failed to read body",
 		})
 
 		return
@@ -28,11 +29,17 @@ func SavedRecipeCreate(c *gin.Context) {
 	})
 
 	if result.Error != nil {
-		c.Status(400)
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status": "400",
+			"error":  "No key found",
+		})
+
 		return
 	}
 	//return user
-	c.Status(200)
+	c.JSON(http.StatusBadRequest, gin.H{
+		"status": "200",
+	})
 }
 
 func SavedRecipeIndex(c *gin.Context) {
@@ -44,6 +51,7 @@ func SavedRecipeIndex(c *gin.Context) {
 
 	//respond to the posts
 	c.JSON(200, gin.H{
+		"status":        "200",
 		"saved recipes": users,
 	})
 }
@@ -60,6 +68,7 @@ func SavedRecipeShow(c *gin.Context) {
 
 	//respond to the posts
 	c.JSON(200, gin.H{
+		"status":       "200",
 		"Saved recipe": user,
 	})
 }
@@ -71,7 +80,8 @@ func SavedRecipeDelete(c *gin.Context) {
 	}
 	if c.Bind(&body) != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Failed to read body",
+			"status": "400",
+			"error":  "Failed to read body",
 		})
 
 		return
@@ -83,9 +93,14 @@ func SavedRecipeDelete(c *gin.Context) {
 
 	//return value
 	if result.Error != nil {
-		c.Status(400)
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status": "400",
+		})
 		return
 	}
 
-	c.Status(200)
+	c.JSON(http.StatusOK, gin.H{
+		"status": "200",
+	})
+	return
 }
