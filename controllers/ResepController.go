@@ -15,6 +15,7 @@ func ResepCreate(c *gin.Context) {
 		Created_by   int
 		Rating       float32
 		jumlahrating int
+		Timetaken    string
 		Description  string
 		Judul        string
 		Portionsize  int
@@ -29,7 +30,7 @@ func ResepCreate(c *gin.Context) {
 	}
 
 	//create a user
-	resep := models.Resep{Created_by: body.Created_by, Judul: body.Judul, Foto: nil, Video: nil, Portionsize: body.Portionsize, Description: body.Description, Rating: body.Rating}
+	resep := models.Resep{Created_by: body.Created_by, Judul: body.Judul, Foto: nil, Timetaken: body.Timetaken, Video: nil, Portionsize: body.Portionsize, Description: body.Description, Rating: body.Rating}
 	result := initializers.DB.Create(&resep)
 
 	if result.Error != nil {
@@ -80,6 +81,7 @@ func ResepUpdate(c *gin.Context) {
 		Description string
 		Judul       string
 		Portionsize int
+		Timetaken   string
 		Foto        string
 		Video       string
 	}
@@ -111,6 +113,7 @@ func ResepUpdate(c *gin.Context) {
 		Rating:      body.Rating,
 		Description: body.Description,
 		Judul:       body.Judul,
+		Timetaken:   body.Timetaken,
 		Portionsize: body.Portionsize,
 		Foto:        imageData,
 		Video:       videoData,
