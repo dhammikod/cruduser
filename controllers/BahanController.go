@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/base64"
 	"net/http"
 
 	"github.com/dhammikod/cruduser/initializers"
@@ -24,8 +25,15 @@ func BahanCreate(c *gin.Context) {
 	}
 
 	//create a user
+	imageData, err := base64.StdEncoding.DecodeString(body.Foto)
+	if err != nil {
+		c.AbortWithStatusJSON(500, gin.H{
+			"status": "500",
+		})
+		return
+	}
 
-	bahan := models.Bahan{Namabahan: body.Namabahan}
+	bahan := models.Bahan{Namabahan: body.Namabahan, Foto: imageData}
 	result := initializers.DB.Create(&bahan)
 
 	if result.Error != nil {
