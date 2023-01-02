@@ -33,7 +33,7 @@ type Resep struct {
 type Bahan struct {
 	gorm.Model
 	Namabahan string
-	Foto      []byte `gorm:"type:longblob;default:null"`
+	Foto      string
 }
 
 type Listbahan struct {

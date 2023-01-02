@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/base64"
 	"fmt"
-	"image"
 	"image/png"
 	"io/ioutil"
 	"log"
@@ -94,7 +93,7 @@ func main() {
 	initializers.DB.Table("saved_recipes").Create(map[string]interface{}{"resep_id": 4, "user_id": 1})
 }
 
-func getgambar(link string) []byte {
+func getgambar(link string) string {
 	//getting the image from online url
 	resp, err := http.Get(link)
 	if err != nil {
@@ -112,26 +111,27 @@ func getgambar(link string) []byte {
 	imageDataString := base64.StdEncoding.EncodeToString(imageData)
 
 	//decoding the image to []byte
-	imageDatas, err := base64.StdEncoding.DecodeString(imageDataString)
-	if err != nil {
-		log.Fatal(err)
-	}
+	// imageDatas, err := base64.StdEncoding.DecodeString(imageDataString)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
 	//converting the byte to have a .jpg file extension
-	image, err := png.Decode(bytes.NewReader(imageDatas))
-	if err != nil {
-		log.Fatal(err)
-	}
+	// image, err := png.Decode(bytes.NewReader(imageDatas))
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
 	// Encode the image object to a []byte
-	buffer := new(bytes.Buffer)
-	err = png.Encode(buffer, image)
-	if err != nil {
-		log.Fatal(err)
-	}
+	// buffer := new(bytes.Buffer)
+	// err = png.Encode(buffer, image)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
 	//returning the data
-	return buffer.Bytes()
+	// return buffer.Bytes()
+	return imageDataString
 }
 
 func readgambar(id int) {
@@ -152,14 +152,33 @@ func readgambar(id int) {
 	}
 	defer file.Close()
 
-	// Decode the image data into an image.Image object
-	img, _, err := image.Decode(bytes.NewReader(bahan.Foto))
+	// decoding the image to []byte
+	imageDatas, err := base64.StdEncoding.DecodeString(bahan.Foto)
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	// converting the byte to have a .jpg file extension
+	image, err := png.Decode(bytes.NewReader(imageDatas))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Encode the image object to a []byte
+	// buffer := new(bytes.Buffer)
+	// err = png.Encode(buffer, image)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// Decode the image data into an image.Image object
+	// img, _, err := image.Decode(bytes.NewReader(bahan.Foto))
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
 	// Write the image data to the file
-	err = png.Encode(file, img)
+	err = png.Encode(file, image)
 	if err != nil {
 		log.Fatal(err)
 	}
