@@ -40,7 +40,7 @@ type Listbahan struct {
 	gorm.Model
 	Bahan_id    int
 	Bahan       Bahan `gorm:"foreignKey:Bahan_id"`
-	Jumlahbahan int
+	Jumlahbahan string
 	Resep_id    uint
 }
 

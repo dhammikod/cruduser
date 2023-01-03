@@ -29,7 +29,7 @@ func main() {
 	initializers.DB.AutoMigrate(&models.Listbahan{})
 
 	//creating Users
-	hash, err := bcrypt.GenerateFromPassword([]byte("password123"), 10)
+	hash, err := bcrypt.GenerateFromPassword([]byte("cc"), 10)
 	if err != nil {
 		fmt.Println("ada error")
 	}
@@ -38,7 +38,7 @@ func main() {
 	initializers.DB.Create(&models.User{Name: "siapa", Email: "siapa1@gmail.com", Password: string(hash), Profile_picture: "profle picture", Notification: false})
 	initializers.DB.Create(&models.User{Name: "ludwig", Email: "ludwig@gmail.com", Password: string(hash), Profile_picture: "profle picture", Notification: false})
 	initializers.DB.Create(&models.User{Name: "magnus", Email: "magnus@gmail.com", Password: string(hash), Profile_picture: "profle picture", Notification: false})
-	initializers.DB.Create(&models.User{Name: "cc", Email: "Dcc", Password: string("cc"), Profile_picture: "profle picture", Notification: false})
+	initializers.DB.Create(&models.User{Name: "cc", Email: "cc", Password: string(hash), Profile_picture: "profle picture", Notification: false})
 
 	//creating reseps
 	nasigoreng := getgambar("rmimg/nasigoreng.png")
@@ -76,20 +76,20 @@ func main() {
 	readgambar(7)
 
 	//create list bahan
-	initializers.DB.Create(&models.Listbahan{Resep_id: 1, Bahan_id: 2, Jumlahbahan: 2})
-	initializers.DB.Create(&models.Listbahan{Resep_id: 1, Bahan_id: 1, Jumlahbahan: 1})
-	initializers.DB.Create(&models.Listbahan{Resep_id: 1, Bahan_id: 6, Jumlahbahan: 2})
-	initializers.DB.Create(&models.Listbahan{Resep_id: 1, Bahan_id: 7, Jumlahbahan: 2})
-	initializers.DB.Create(&models.Listbahan{Resep_id: 2, Bahan_id: 4, Jumlahbahan: 1})
-	initializers.DB.Create(&models.Listbahan{Resep_id: 3, Bahan_id: 3, Jumlahbahan: 2})
-	initializers.DB.Create(&models.Listbahan{Resep_id: 3, Bahan_id: 6, Jumlahbahan: 2})
-	initializers.DB.Create(&models.Listbahan{Resep_id: 3, Bahan_id: 7, Jumlahbahan: 2})
-	initializers.DB.Create(&models.Listbahan{Resep_id: 4, Bahan_id: 5, Jumlahbahan: 2})
-	initializers.DB.Create(&models.Listbahan{Resep_id: 4, Bahan_id: 6, Jumlahbahan: 1})
-	initializers.DB.Create(&models.Listbahan{Resep_id: 4, Bahan_id: 7, Jumlahbahan: 1})
-	initializers.DB.Create(&models.Listbahan{Resep_id: 5, Bahan_id: 1, Jumlahbahan: 2})
-	initializers.DB.Create(&models.Listbahan{Resep_id: 5, Bahan_id: 6, Jumlahbahan: 2})
-	initializers.DB.Create(&models.Listbahan{Resep_id: 5, Bahan_id: 7, Jumlahbahan: 2})
+	initializers.DB.Create(&models.Listbahan{Resep_id: 1, Bahan_id: 2, Jumlahbahan: "2"})
+	initializers.DB.Create(&models.Listbahan{Resep_id: 1, Bahan_id: 1, Jumlahbahan: "1"})
+	initializers.DB.Create(&models.Listbahan{Resep_id: 1, Bahan_id: 6, Jumlahbahan: "2"})
+	initializers.DB.Create(&models.Listbahan{Resep_id: 1, Bahan_id: 7, Jumlahbahan: "2"})
+	initializers.DB.Create(&models.Listbahan{Resep_id: 2, Bahan_id: 4, Jumlahbahan: "1"})
+	initializers.DB.Create(&models.Listbahan{Resep_id: 3, Bahan_id: 3, Jumlahbahan: "2"})
+	initializers.DB.Create(&models.Listbahan{Resep_id: 3, Bahan_id: 6, Jumlahbahan: "2"})
+	initializers.DB.Create(&models.Listbahan{Resep_id: 3, Bahan_id: 7, Jumlahbahan: "2"})
+	initializers.DB.Create(&models.Listbahan{Resep_id: 4, Bahan_id: 5, Jumlahbahan: "2"})
+	initializers.DB.Create(&models.Listbahan{Resep_id: 4, Bahan_id: 6, Jumlahbahan: "1"})
+	initializers.DB.Create(&models.Listbahan{Resep_id: 4, Bahan_id: 7, Jumlahbahan: "1"})
+	initializers.DB.Create(&models.Listbahan{Resep_id: 5, Bahan_id: 1, Jumlahbahan: "2"})
+	initializers.DB.Create(&models.Listbahan{Resep_id: 5, Bahan_id: 6, Jumlahbahan: "2"})
+	initializers.DB.Create(&models.Listbahan{Resep_id: 5, Bahan_id: 7, Jumlahbahan: "2"})
 
 	//create saved recipe
 	initializers.DB.Table("saved_recipes").Create(map[string]interface{}{"resep_id": 1, "user_id": 4})

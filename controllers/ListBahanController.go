@@ -13,7 +13,7 @@ func ListBahanCreate(c *gin.Context) {
 	var body struct {
 		Resep_id    uint
 		Bahan_id    int
-		Jumlahbahan int
+		Jumlahbahan string
 	}
 	if c.Bind(&body) != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -77,7 +77,7 @@ func ListBahanUpdate(c *gin.Context) {
 	var body struct {
 		Resep_id    uint
 		Bahan_id    int
-		Jumlahbahan int
+		Jumlahbahan string
 	}
 	c.Bind(&body)
 
