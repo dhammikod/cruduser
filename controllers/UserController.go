@@ -62,7 +62,7 @@ func UsersIndex(c *gin.Context) {
 	//respond to the posts
 	c.JSON(200, gin.H{
 		"status": "200",
-		"user":   users,
+		"User":   users,
 	})
 }
 
@@ -76,7 +76,7 @@ func UsersShow(c *gin.Context) {
 	//respond to the posts
 	c.JSON(200, gin.H{
 		"status": "200",
-		"user":   user,
+		"User":   user,
 	})
 }
 func UsersUpdate(c *gin.Context) {
@@ -182,7 +182,6 @@ func Login(c *gin.Context) {
 	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"user":   user.ID,
 			"status": "400",
 			"error":  "Failed to create Token",
 		})
@@ -193,6 +192,7 @@ func Login(c *gin.Context) {
 	c.SetSameSite(http.SameSiteLaxMode)
 	c.SetCookie("authorization", tokenString, 3600*24*30, "", "", false, true)
 	c.JSON(http.StatusOK, gin.H{
+		"user":   user.ID,
 		"status": "200",
 		"token":  tokenString,
 	})

@@ -7,7 +7,8 @@ import (
 	"image/png"
 	"io/ioutil"
 	"log"
-	"net/http"
+
+	// "net/http"
 	"os"
 
 	"github.com/dhammikod/cruduser/initializers"
@@ -37,28 +38,34 @@ func main() {
 	initializers.DB.Create(&models.User{Name: "siapa", Email: "siapa1@gmail.com", Password: string(hash), Profile_picture: "profle picture", Notification: false})
 	initializers.DB.Create(&models.User{Name: "ludwig", Email: "ludwig@gmail.com", Password: string(hash), Profile_picture: "profle picture", Notification: false})
 	initializers.DB.Create(&models.User{Name: "magnus", Email: "magnus@gmail.com", Password: string(hash), Profile_picture: "profle picture", Notification: false})
+	initializers.DB.Create(&models.User{Name: "cc", Email: "Dcc", Password: string("cc"), Profile_picture: "profle picture", Notification: false})
 
 	//creating reseps
-	initializers.DB.Create(&models.Resep{Created_by: 1, Judul: "nasi goreng", Steps: "Cicak", Portionsize: 3, Description: "nasi goreng khusus mahasiswa on budget", Timetaken: "30 menit", Totalcal: 1000, Rating: 3, Jumlahrating: 0})
-	initializers.DB.Create(&models.Resep{Created_by: 2, Judul: "bebek bakar", Steps: "Cicak", Portionsize: 1, Description: "aves mewah", Timetaken: "3 jam", Rating: 5, Jumlahrating: 0, Totalcal: 1000})
-	initializers.DB.Create(&models.Resep{Created_by: 1, Judul: "mie goreng", Steps: "Cicak", Portionsize: 1, Description: "mie goreng khusus mahasiswa on budget", Timetaken: "30 menit", Totalcal: 500, Rating: 1, Jumlahrating: 0})
-	initializers.DB.Create(&models.Resep{Created_by: 3, Judul: "indomie mewah", Steps: "Cicak", Portionsize: 1, Description: "mie goreng indomie bernutrisi", Timetaken: "15 menit", Totalcal: 1000, Rating: 5, Jumlahrating: 0})
-	initializers.DB.Create(&models.Resep{Created_by: 4, Judul: "fu yung hai", Steps: "Cicak", Portionsize: 2, Description: "chineese food yang mudah dimasak", Timetaken: "15 menit", Totalcal: 700, Rating: 4, Jumlahrating: 0})
+	nasigoreng := getgambar("rmimg/nasigoreng.png")
+	initializers.DB.Create(&models.Resep{Created_by: 1, Foto: nasigoreng, Judul: "nasi goreng", Steps: "Cicak", Portionsize: 3, Description: "nasi goreng khusus mahasiswa on budget", Timetaken: "30 menit", Totalcal: 1000, Rating: 3, Jumlahrating: 0})
+	bebekbakar := getgambar("rmimg/bebekgoreng.png")
+	initializers.DB.Create(&models.Resep{Created_by: 2, Foto: bebekbakar, Judul: "bebek bakar", Steps: "Cicak", Portionsize: 1, Description: "aves mewah", Timetaken: "3 jam", Rating: 5, Jumlahrating: 0, Totalcal: 1000})
+	miegoreng := getgambar("rmimg/miegoreng.png")
+	initializers.DB.Create(&models.Resep{Created_by: 1, Foto: miegoreng, Judul: "mie goreng", Steps: "Cicak", Portionsize: 1, Description: "mie goreng khusus mahasiswa on budget", Timetaken: "30 menit", Totalcal: 500, Rating: 1, Jumlahrating: 0})
+	indomiemewah := getgambar("rmimg/indomiemewah.png")
+	initializers.DB.Create(&models.Resep{Created_by: 3, Foto: indomiemewah, Judul: "indomie mewah", Steps: "Cicak", Portionsize: 1, Description: "mie goreng indomie bernutrisi", Timetaken: "15 menit", Totalcal: 1000, Rating: 5, Jumlahrating: 0})
+	fuyunghai := getgambar("rmimg/fuyunghai.png")
+	initializers.DB.Create(&models.Resep{Created_by: 4, Foto: fuyunghai, Judul: "fu yung hai", Steps: "Cicak", Portionsize: 2, Description: "chineese food yang mudah dimasak", Timetaken: "15 menit", Totalcal: 700, Rating: 4, Jumlahrating: 0})
 
 	//create bahan
-	kentang := getgambar("https://w7.pngwing.com/pngs/1018/700/png-transparent-potato-vegetable-food-fruit-potato-soup-food-baking.png")
+	kentang := getgambar("rmimg/kentang.png")
 	initializers.DB.Create(&models.Bahan{Namabahan: "kentang", Foto: kentang})
-	nasi := getgambar("https://e7.pngegg.com/pngimages/622/651/png-clipart-rice-rice.png")
+	nasi := getgambar("rmimg/nasi.png")
 	initializers.DB.Create(&models.Bahan{Namabahan: "nasi", Foto: nasi})
-	mie := getgambar("https://png.pngtree.com/png-vector/20210930/ourmid/pngtree-raw-noodles-healthy-pastry-nutritional-ingredients-png-image_3963645.png")
+	mie := getgambar("rmimg/mie.png")
 	initializers.DB.Create(&models.Bahan{Namabahan: "mie", Foto: mie})
-	bebek := getgambar("https://w7.pngwing.com/pngs/146/121/png-transparent-duck-meat-chicken-leg-food-duck-animals-liver-animal-source-foods.png")
+	bebek := getgambar("rmimg/bebek.png")
 	initializers.DB.Create(&models.Bahan{Namabahan: "bebek", Foto: bebek})
-	indomie := getgambar("https://w7.pngwing.com/pngs/318/116/png-transparent-indomie-instant-noodle-mie-goreng-fried-noodles-chow-mein-chicken-food-animals-recipe.png")
+	indomie := getgambar("rmimg/indomie.png")
 	initializers.DB.Create(&models.Bahan{Namabahan: "indomie", Foto: indomie})
-	telur := getgambar("https://w7.pngwing.com/pngs/321/422/png-transparent-chicken-egg-yolk-food-egg-food-chicken-egg-yolk.png")
+	telur := getgambar("rmimg/telur.png")
 	initializers.DB.Create(&models.Bahan{Namabahan: "telur", Foto: telur})
-	sosis := getgambar("https://e7.pngegg.com/pngimages/19/528/png-clipart-frankfurter-wurstchen-hot-dog-bockwurst-sausage-roll-hot-dog-food-beef.png")
+	sosis := getgambar("rmimg/sosis.png")
 	initializers.DB.Create(&models.Bahan{Namabahan: "sosis", Foto: sosis})
 	readgambar(1)
 	readgambar(2)
@@ -95,14 +102,20 @@ func main() {
 
 func getgambar(link string) string {
 	//getting the image from online url
-	resp, err := http.Get(link)
+	// resp, err := http.Get(link)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// defer resp.Body.Close()
+
+	file, err := os.Open(link)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
 	}
-	defer resp.Body.Close()
+	defer file.Close()
 
 	// Read the image data from the response body
-	imageData, err := ioutil.ReadAll(resp.Body)
+	imageData, err := ioutil.ReadAll(file)
 	if err != nil {
 		log.Fatal(err)
 	}

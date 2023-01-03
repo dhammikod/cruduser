@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"encoding/base64"
+	// "encoding/base64"
 	"net/http"
 
 	"github.com/dhammikod/cruduser/initializers"
@@ -20,6 +20,7 @@ func ResepCreate(c *gin.Context) {
 		Judul        string
 		Portionsize  int
 		Steps        string
+		Foto         string
 	}
 	if c.Bind(&body) != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -30,7 +31,7 @@ func ResepCreate(c *gin.Context) {
 	}
 
 	//create a user
-	resep := models.Resep{Created_by: body.Created_by, Steps: body.Steps, Judul: body.Judul, Foto: nil, Timetaken: body.Timetaken, Video: nil, Portionsize: body.Portionsize, Description: body.Description, Rating: body.Rating}
+	resep := models.Resep{Created_by: body.Created_by, Steps: body.Steps, Judul: body.Judul, Foto: body.Foto, Timetaken: body.Timetaken, Video: "", Portionsize: body.Portionsize, Description: body.Description, Rating: body.Rating}
 	result := initializers.DB.Create(&resep)
 
 	if result.Error != nil {
@@ -127,22 +128,22 @@ func ResepUpdate(c *gin.Context) {
 	c.Bind(&body)
 
 	//decode the foto
-	imageData, err := base64.StdEncoding.DecodeString(body.Foto)
-	if err != nil {
-		c.AbortWithStatusJSON(500, gin.H{
-			"status": "500",
-		})
-		return
-	}
+	// imageData, err := base64.StdEncoding.DecodeString(body.Foto)
+	// if err != nil {
+	// 	c.AbortWithStatusJSON(500, gin.H{
+	// 		"status": "500",
+	// 	})
+	// 	return
+	// }
 
 	//decode the video
-	videoData, err := base64.StdEncoding.DecodeString(body.Video)
-	if err != nil {
-		c.AbortWithStatusJSON(500, gin.H{
-			"status": "500",
-		})
-		return
-	}
+	// videoData, err := base64.StdEncoding.DecodeString(body.Video)
+	// if err != nil {
+	// 	c.AbortWithStatusJSON(500, gin.H{
+	// 		"status": "500",
+	// 	})
+	// 	return
+	// }
 	//find the post to update
 	var resep models.Resep
 	initializers.DB.First(&resep, id)
@@ -154,8 +155,8 @@ func ResepUpdate(c *gin.Context) {
 		Judul:       body.Judul,
 		Timetaken:   body.Timetaken,
 		Portionsize: body.Portionsize,
-		Foto:        imageData,
-		Video:       videoData,
+		Foto:        body.Foto,
+		Video:       body.Video,
 		Steps:       body.Steps,
 	})
 
