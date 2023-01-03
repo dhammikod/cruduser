@@ -75,8 +75,7 @@ func UsersShow(c *gin.Context) {
 
 	//respond to the posts
 	c.JSON(200, gin.H{
-		"status": "200",
-		"User":   user,
+		"User": user,
 	})
 }
 func UsersUpdate(c *gin.Context) {
