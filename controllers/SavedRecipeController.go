@@ -6,6 +6,7 @@ import (
 	"github.com/dhammikod/cruduser/initializers"
 	"github.com/dhammikod/cruduser/models"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 func SavedRecipeCreate(c *gin.Context) {
@@ -18,6 +19,20 @@ func SavedRecipeCreate(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"status": "400",
 			"error":  "Failed to read body",
+		})
+
+		return
+	}
+
+	err := initializers.DB.Unscoped().
+		Table("saved_recipes").
+		Where("resep_id = ? AND user_id = ?", body.Resep_id, body.User_id).
+		First(&models.Savedrecipe{}).Error
+
+	if err == gorm.ErrRecordNotFound {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status": "400",
+			"result": "multiple record found",
 		})
 
 		return

@@ -40,9 +40,11 @@ func ResepCreate(c *gin.Context) {
 		})
 		return
 	}
+
 	//return user
 	c.JSON(200, gin.H{
 		"status": "200",
+		"id":     resep.ID,
 		"tesets": body.Judul,
 	})
 }
