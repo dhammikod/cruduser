@@ -68,6 +68,7 @@ func main() {
 	savedrecipes := r.Group("/savedrecipe").Use(middleware.RequireAuth)
 	{
 		//crud saved recipe
+		savedrecipes.POST("/exist", controllers.Existornot)
 		savedrecipes.POST("/", controllers.SavedRecipeCreate)
 		savedrecipes.GET("/", controllers.SavedRecipeIndex)
 		savedrecipes.GET("/:id", controllers.SavedRecipeShow)
