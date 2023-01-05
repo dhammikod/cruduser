@@ -21,6 +21,7 @@ func ResepCreate(c *gin.Context) {
 		Portionsize  int
 		Steps        string
 		Foto         string
+		Totalcal     int
 	}
 	if c.Bind(&body) != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -31,7 +32,7 @@ func ResepCreate(c *gin.Context) {
 	}
 
 	//create a user
-	resep := models.Resep{Created_by: body.Created_by, Steps: body.Steps, Judul: body.Judul, Foto: body.Foto, Timetaken: body.Timetaken, Video: "", Portionsize: body.Portionsize, Description: body.Description, Rating: body.Rating}
+	resep := models.Resep{Totalcal: body.Totalcal, Created_by: body.Created_by, Steps: body.Steps, Judul: body.Judul, Foto: body.Foto, Timetaken: body.Timetaken, Video: "", Portionsize: body.Portionsize, Description: body.Description, Rating: body.Rating}
 	result := initializers.DB.Create(&resep)
 
 	if result.Error != nil {
