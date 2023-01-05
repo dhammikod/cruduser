@@ -106,7 +106,7 @@ func SavedRecipeIndex(c *gin.Context) {
 	//respond to the posts
 	c.JSON(200, gin.H{
 		"status":        "200",
-		"saved recipes": users,
+		"saved_recipes": users,
 	})
 }
 
@@ -123,7 +123,7 @@ func SavedRecipeShow(c *gin.Context) {
 	//respond to the posts
 	c.JSON(200, gin.H{
 		"status":       "200",
-		"Saved recipe": user,
+		"Saved_recipe": user,
 	})
 }
 
